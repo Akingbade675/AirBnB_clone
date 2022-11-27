@@ -194,7 +194,7 @@ class HBNBCommand(cmd.Cmd):
                 pass
 
             setattr(obj, attr, value)
-            storage.save()
+            obj.save()
 
     def do_destroy(self, stdin):
         """Usage: destroy <class> <id> or <class>.destroy(<id>)\
