@@ -42,8 +42,8 @@ class FileStorage():
         return (FileStorage.__objects)
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
-        key = f"{obj.__class__.__name__}.{obj.id}"
+        """Sets in __objects the obj with key <obj class name>.id"""
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
@@ -55,16 +55,17 @@ class FileStorage():
                 list_dict = {}
                 for key, value in FileStorage.__objects.items():
                     list_dict[key] = value.to_dict()
-                json_file.write(json.dumps(list_dict))
+                json.dump(list_dict, json_file)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
             with open(FileStorage.__file_path, "r") as json_file:
-                list_dict = json.loads(json_file.read())
-                for key, value in list_dict.items():
-                    class_name, uid = key.split(".")
+                list_dict = json.load(json_file)
+                for value in list_dict.values():
+                    class_name = value["__class__"]
+                    del value["__class__"]
                     obj = self.classes()[class_name](**value)
-                    FileStorage.__objects[key] = obj
+                    self.new(obj)
         except IOError:
             pass
