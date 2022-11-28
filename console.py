@@ -3,7 +3,6 @@
 
 import cmd
 import shlex
-import sys
 from models import storage
 
 
@@ -105,15 +104,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, stdin):
         """Quit command to exit the program."""
-        sys.exit()
+        return True
 
     def do_EOF(self, stdin):
         """EOF command to exit the program."""
-        sys.exit()
+        return True
 
     def do_create(self, stdin):
-        """Usage: create <class>\
-                Create a new class instance and print its id."""
+        """Usage: create <class>
+        Create a new class instance and print its id."""
         if stdin == "":
             print("** class name missing **")
         elif stdin not in self.classes().keys():
@@ -125,9 +124,9 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, stdin):
-        """Usage: show <class> <id> or <class>.show(<id>)\
-            Display the string representation of a class instance of\
-        a given id."""
+        """Usage: show <class> <id> or <class>.show(<id>)
+        Display the string representation of a class instance of\
+         a given id."""
         if stdin == "":
             print("** class name missing **")
             return
@@ -151,10 +150,10 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_update(self, stdin):
-        """Usage: update <class> <id> <attribute_name> <attribute_value> or\
-        <class>.update(<id>, <attribute_name>, <attribute_value">) or\
-        <class>.update(<id>, <dictionary>)\
-        Update a class instance of a given id by adding or updating\
+        """Usage: update <class> <id> <attribute_name> <attribute_value> or
+        <class>.update(<id>, <attribute_name>, <attribute_value>) or
+        <class>.update(<id>, <dictionary>)
+        Update a class instance of a given id by adding or updating
         a given attribute key/value pair or dictionary."""
         my_stdin = shlex.split(stdin)
         lent = len(my_stdin)
@@ -197,8 +196,8 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
 
     def do_destroy(self, stdin):
-        """Usage: destroy <class> <id> or <class>.destroy(<id>)\
-                Deletes an instance based on the class name and id."""
+        """Usage: destroy <class> <id> or <class>.destroy(<id>)
+        Deletes an instance based on the class name and id."""
         if stdin == "":
             print("** class name missing **")
             return
@@ -221,8 +220,8 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, stdin):
-        """Usage: all or all <class> or <class>.all()\
-        Display string representations of all instances of a given class.\
+        """Usage: all or all <class> or <class>.all()
+        Display string representations of all instances of a given class.
         If no class is specified, displays all instantiated objects."""
         lis_objs = []
         objs = storage.all()
